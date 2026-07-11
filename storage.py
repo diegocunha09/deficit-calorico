@@ -2,7 +2,7 @@
 configurado em .streamlit/secrets.toml (local) ou nos secrets do Streamlit Community Cloud."""
 import json
 
-import psycopg2
+import psycopg
 import streamlit as st
 
 CONFIG_PADRAO = {
@@ -15,7 +15,7 @@ CONFIG_PADRAO = {
 
 def _conectar():
     cfg = st.secrets["postgres"]
-    return psycopg2.connect(
+    return psycopg.connect(
         host=cfg["host"],
         port=cfg["port"],
         dbname=cfg["dbname"],
