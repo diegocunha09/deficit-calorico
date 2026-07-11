@@ -42,8 +42,12 @@ create table if not exists composicao (
 Copie `.streamlit/secrets.toml.example` para `.streamlit/secrets.toml` e preencha com:
 
 - `app_password`: uma senha à sua escolha, para proteger o acesso ao app.
-- `[postgres]`: host, porta, nome do banco, usuário e senha — encontrados em
-  *Project Settings → Database → Connection parameters* no painel do Supabase.
+- `[postgres]`: host, porta, nome do banco, usuário e senha — encontrados no botão **"Connect"** no
+  topo do painel do projeto Supabase → aba **"Direct Connection"** → seletor **"Session pooler"**.
+
+  Use sempre o **Session pooler**, não a "Direct connection" pura: ela resolve por endereço IPv6, que
+  trava com timeout em redes/hospedagens sem saída IPv6 (incluindo o Streamlit Community Cloud). O
+  Session pooler resolve por IPv4 e funciona em qualquer lugar.
 
 Esse arquivo **não vai para o Git** (está no `.gitignore`). Ao publicar no Streamlit Community Cloud,
 cole o mesmo conteúdo na aba de **Secrets** das configurações do app por lá.
