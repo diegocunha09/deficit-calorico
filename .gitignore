@@ -1,0 +1,15 @@
+# Credenciais reais — nunca versionar
+.streamlit/secrets.toml
+
+# Dados locais legados (pré-migração para Supabase) — backup pessoal, não pertence ao repositório
+data/
+
+# Planilha original com dados pessoais
+*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs de execução local do Streamlit
+streamlit_log.txt
