@@ -919,3 +919,39 @@ with abas[6]:
                 mime="application/json",
                 width="stretch",
             )
+
+    st.markdown("#### ⚠️ Zona de risco")
+    with st.container(border=True):
+        st.caption(
+            "Reseta o histórico diário — Consumido, Treino Bruto, Minutos, déficit acumulado e "
+            "sequência de dias — pra começar uma fase nova do zero. Perfil, Basal, Metas e Composição "
+            "Corporal não são afetados."
+        )
+        if st.button("🔄 Resetar registros diários"):
+            st.session_state["confirmar_reset"] = True
+            st.rerun()
+
+        if st.session_state.get("confirmar_reset"):
+            st.warning(
+                "⚠️ Isso vai apagar **todos os dias registrados** — o déficit acumulado e a sequência de "
+                "dias voltam a zero. Perfil, Basal, Metas e Composição Corporal continuam intactos. "
+                "Essa ação não pode ser desfeita."
+            )
+            st.download_button(
+                "⬇️ Baixar backup antes de continuar (recomendado)",
+                data=backup_bytes,
+                file_name=f"deficit_calorico_backup_{datetime.date.today().isoformat()}.json",
+                mime="application/json",
+                key="backup_antes_reset",
+            )
+            col_confirma, col_cancela = st.columns(2)
+            with col_confirma:
+                if st.button("✅ Sim, apagar todo o histórico diário", key="confirmar_reset_botao"):
+                    storage.salvar_registros({})
+                    st.session_state["confirmar_reset"] = None
+                    st.success("Histórico diário resetado.")
+                    st.rerun()
+            with col_cancela:
+                if st.button("Cancelar", key="cancelar_reset_botao"):
+                    st.session_state["confirmar_reset"] = None
+                    st.rerun()
